@@ -1,23 +1,58 @@
+
+
+<div class="login-form">
+  <form [formGroup]="loginFormGroup">
+    <div class="avatar">
+			<img src="" alt="Logo">
+		</div>
+    <h2 class="text-center">Shop-It Login</h2>
+    <div class="form-group">
+      <input type="text" formControlName="email" pInputText [style]="{'width': '100%'}"  placeholder="Email"/>
+      <small *ngIf="loginForm.email.invalid && isSubmitted" class="p-error">
+        <span *ngIf="loginForm.email.errors.required">email is required</span>
+        <span *ngIf="loginForm.email.errors.email">email is invalid</span>
+      </small>
+    </div>
+
+
+    <div class="form-group">
+      <input type="password" formControlName="password" pInputText [style]="{'width': '100%'}"  placeholder="Password" />
+      <small *ngIf="loginForm.password.invalid && isSubmitted" class="p-error">
+        Password is required
+      </small>  
+    </div>
+
+
+    <div class="form-group">
+      <p-button label="Sign In" styleClass="full-btn" (onClick)="onSubmit()" [style]="{'width': '100%', 'background': '#ffd700', 'color':'black', 'font-weight':'bold'}"></p-button>
+      <div class="p-col-12" *ngIf="isSubmitted && authError">
+        <small class="p-error">{{ authMessage }}</small>
+      </div>
+    </div>
+    <div class="bottom-action clearfix">
+      <label class="float-left form-check-label"><input type="checkbox" /> Remember me</label>
+      <a class="float-right"><u>Forgot Password?</u></a>
+    </div>
+  </form>
+</div>
+
 <style>
-  <!-- body {
-    color: #fff;
-    background: #d47677;
-  }
-  -- > .form-control {
+  .form-control {
     min-height: 41px;
     background: #fff;
     box-shadow: none !important;
     border-color: #e3e3e3;
+    width: 300px;
   }
   .form-control:focus {
-    border-color: #70c5c0;
+    border-color: #ffd700;
   }
   .form-control,
   .btn {
     border-radius: 2px;
   }
   .login-form {
-    width: 350px;
+    width: 300px;
     margin: 0 auto;
     padding: 100px 0 30px;
   }
@@ -56,14 +91,6 @@
     position: relative;
     top: 1px;
   }
-  .login-form .btn,
-  .login-form .btn:active {
-    font-size: 16px;
-    font-weight: bold;
-    background: #ffd700 !important;
-    border: none;
-    margin-bottom: 20px;
-  }
   .login-form .btn:hover,
   .login-form .btn:focus {
     background: #ffd700 !important;
@@ -85,84 +112,4 @@
   .login-form .bottom-action {
     font-size: 14px;
   }
-</style>
-
-<div class="login-form">
-  <form [formGroup]="loginFormGroup">
-    <div class="avatar"></div>
-    <h2 class="text-center">Login to Shop-It</h2>
-    <div class="form-group">
-      <input type="text" formControlName="email" pInputText placeholder="Email"/>
-      <small *ngIf="loginForm.email.invalid && isSubmitted" class="p-error">
-        <span *ngIf="loginForm.email.errors.required">email is required</span>
-        <span *ngIf="loginForm.email.errors.email">email is invalid</span>
-      </small>
-    </div>
-    <div class="form-group">
-      <input type="password" formControlName="password" pInputText placeholder="Password" />
-      <small *ngIf="loginForm.password.invalid && isSubmitted" class="p-error">
-        Password is required
-      </small>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-lg btn-block" (onClick)="onSubmit()">
-        Sign in
-      </button>
-      <div class="p-col-12" *ngIf="isSubmitted && authError">
-        <small class="p-error">{{ authMessage }}</small>
-      </div>
-    </div>
-    <div class="bottom-action clearfix">
-      <label class="float-left form-check-label"><input type="checkbox" /> Remember me</label>
-      <a class="float-right"><u>Forgot Password?</u></a>
-    </div>
-  </form>
-</div>
-
-<!-- <div class="login-register">
-  <div class="login-register-panel">
-    <div class="p-grid">
-      <div class="p-col-6">
-        <div class="avatar"></div>
-      </div>
-      <div class="p-col-6 p-p-5">
-        <h3>Welcome!</h3>
-        <h2>Login Page</h2>
-        <form [formGroup]="loginFormGroup">
-          <div class="p-grid p-mt-6">
-            <div class="p-col-12">
-              <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input type="text" formControlName="email" pInputText placeholder="Email" />
-              </div>
-              <small *ngIf="loginForm.email.invalid && isSubmitted" class="p-error"
-                ><span *ngIf="loginForm.email.errors.required">email is required</span>
-                <span *ngIf="loginForm.email.errors.email">email is invalid</span></small
-              >
-            </div>
-            <div class="p-col-12">
-              <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                <input
-                  type="password"
-                  formControlName="password"
-                  pInputText
-                  placeholder="Password"
-                />
-              </div>
-              <small *ngIf="loginForm.password.invalid && isSubmitted" class="p-error"
-                >Password is required
-              </small>
-            </div>
-            <div class="p-col-12">
-              <p-button label="Submit" styleClass="full-btn" (onClick)="onSubmit()"></p-button>
-            </div>
-            <div class="p-col-12" *ngIf="isSubmitted && authError">
-              <small class="p-error">{{ authMessage }}</small>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
+</style>v
