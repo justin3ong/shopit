@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '@bluebits/users';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -24,23 +24,43 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private ordersService: OrdersService,
-    private usersService: UsersService,
+    private usersService: UsersService,private route: ActivatedRoute
   ) {}
   form: FormGroup;
   isSubmitted = false;
   orderItems: OrderItem[] = [];
   userId: string;
   unsubscribe$: Subject<any> = new Subject();
+  order:Order[]=[];
 
   ngOnInit(): void {
+this.usersService
+      .observeCurrentUser()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((user) => {
+        if (user) {
+          this.userId = user.id;
+          this.route.params.subscribe((params) => {
+            this.userId ? this.getPending(this.userId)  : this.getPending();
+          });
+        }})
+   
     this._initCheckoutForm();
     this._autoFillUserData()
-    this._getCartItems();
 
   }
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+ 
+  getPending(filter?:string){
+    console.log(filter)
+    this.ordersService.getOrders(filter).subscribe(orders=>{
+      this.order = orders;
+
+    })
+
   }
    private _initCheckoutForm() {
     this.form = this.formBuilder.group({
@@ -60,7 +80,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .observeCurrentUser()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((user) => {
-        console.log(user)
         if (user) {
           this.userId = user.id;
           this.checkoutForm.name.setValue(user.name);
@@ -76,21 +95,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
  
 
-  private _getCartItems() {
-    const cart: Cart = this.cartService.getCart();
-    this.orderItems = cart.items.map((item) => {
-      return {
-        product: item.id,
-        quantity: item.quantity
-      };
-    });
-
-  }
-
 
 
   back() {
-    this.router.navigate(['/cart']);
+    this.router.navigate(['/']);
   }
 
   placeOrder() {

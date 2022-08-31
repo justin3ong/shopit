@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CategoriesService, Category } from '@bluebits/products';
+import { User, UsersService } from '@bluebits/users';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -11,11 +12,13 @@ import { takeUntil } from 'rxjs/operators';
 export class NavComponent implements OnInit , OnDestroy{
   categories: Category[]=[];
   endsubs$ :Subject<any>=new Subject()
-  constructor(private catService: CategoriesService) { }
-
+  constructor(private catService: CategoriesService,private usersService:UsersService) { }
+userId:string;
   ngOnInit(): void {
     this.getCategory();
-  }
+     this.usersService.observeCurrentUser().subscribe((user) => {
+       if (user) {this.userId = user.id;}
+  })}
   ngOnDestroy(){
     this.endsubs$.next()
     this.endsubs$.complete()

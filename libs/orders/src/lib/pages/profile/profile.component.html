@@ -138,10 +138,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                  <tr *ngFor="let data of order">
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.dateOrdered |date: 'medium' }}</td>
+                    <td>{{ data.totalPrice }}</td>
                   </tr>
                 </tbody>
               </table>

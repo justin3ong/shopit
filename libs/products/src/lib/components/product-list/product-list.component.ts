@@ -18,6 +18,7 @@ isCategoryPage:boolean;
 
   ngOnInit(): void {
      this.route.params.subscribe((params) => {
+       console.log(params.categoryid)
       params.categoryid ? this.getProducts([params.categoryid]) : this.getProducts();
       params.categoryid ? (this.isCategoryPage = true) : (this.isCategoryPage = false);
     });

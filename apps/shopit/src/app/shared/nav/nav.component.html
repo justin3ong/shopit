@@ -37,7 +37,7 @@
           <div class="navbar-nav mr-auto py-0">
             <a href="/" class="nav-item nav-link">Home</a>
             <a routerLink="products" class="nav-item nav-link">Products</a>
-            <a routerLink="profile" class="nav-item nav-link">Profile</a>
+            <a [routerLink]="'/profile/' + userId" class="nav-item nav-link">Profile</a>
           </div>
           <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
             <a class="btn px-0">

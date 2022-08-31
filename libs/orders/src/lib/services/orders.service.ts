@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Order } from '../models/order';
 import { environment } from '@env/environment';
@@ -17,9 +17,23 @@ export class OrdersService {
   }
 
   constructor(private http: HttpClient) {}
+  //  getProducts(categoriesFilter?: string[]): Observable<Product[]> {
+//     let params = new HttpParams();
+//     if (categoriesFilter) {
+//       params = params.append('categories', categoriesFilter.join(','));
+      
+//     }
+//     return this.http.get<Product[]>(this.apiURLProducts, { params: params });
+//   }
 
-  getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.apiURLOrders);
+  getOrders(filter?: string): Observable<Order[]> {
+    let params = new HttpParams();
+     if (filter) {
+     params= params.set('users', filter);
+          
+    }
+    console.log(`${this.apiURLOrders}?${params}`)
+    return this.http.get<Order[]>(`${this.apiURLOrders}?${params}`);
   }
 
   getOrder(orderId: string): Observable<Order> {

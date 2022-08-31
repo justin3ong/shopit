@@ -20,7 +20,7 @@ const routes: Routes=[{
   component:CartPageComponent
 },
 {
-  path:'profile',
+  path:'profile/:userid',
   component:ProfileComponent
 },
 {
